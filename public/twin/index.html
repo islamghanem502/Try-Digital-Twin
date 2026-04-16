@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin: 0; padding: 0; }
+        body { overflow: hidden; background: transparent; }
+        #model-container { width: 100vw; height: 100vh; }
+        #error { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(255,0,0,0.9); color: white; padding: 20px; border-radius: 10px; display: none; }
+        #weight-controller { display: none; }
+    </style>
+</head>
+<body class="static-mode">
+    <div id="error"></div>
+    <div id="model-panel" style="width: 100vw; height: 100vh; position: absolute; top: 0; left: 0; background: transparent;">
+        <div id="model-container" style="width: 100%; height: 100%;"></div>
+        <div id="weight-controller">
+            <input type="range" id="weight-slider" min="0" max="1" step="0.01" value="0">
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
+    <script src="main.js"></script>
+    <script>
+        // Expose key functions to parent iframe
+        window.focusOnObject = typeof focusOnObject !== 'undefined' ? focusOnObject : null;
+        window.returnToNormalView = typeof returnToNormalView !== 'undefined' ? returnToNormalView : null;
+        // Re-expose after load
+        window.addEventListener('load', function() {
+            if (typeof focusOnObject === 'function') window.focusOnObject = focusOnObject;
+            if (typeof returnToNormalView === 'function') window.returnToNormalView = returnToNormalView;
+            if (typeof camera !== 'undefined') window.camera = camera;
+            if (typeof controls !== 'undefined') window.controls = controls;
+        });
+    </script>
+</body>
+</html>
